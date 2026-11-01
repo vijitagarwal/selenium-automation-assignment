@@ -1,7 +1,7 @@
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from common.pending import run_pending
+from common.flows import run_case
 
 if __name__ == "__main__":
-    run_pending("TC-25: Verify Scroll Up using Arrow button")
+    run_case(25, "Verify Scroll Up using Arrow button", Path.cwd())

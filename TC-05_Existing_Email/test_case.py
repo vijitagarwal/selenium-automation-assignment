@@ -1,7 +1,7 @@
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from common.pending import run_pending
+from common.flows import run_case
 
 if __name__ == "__main__":
-    run_pending("TC-05: Register User with existing email")
+    run_case(5, "Register User with existing email", Path.cwd())

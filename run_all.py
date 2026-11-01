@@ -1,6 +1,6 @@
 from pathlib import Path
-import subprocess
-import sys
+
+from common.terminal_controller import execute_with_terminal
 
 
 ROOT = Path(__file__).resolve().parent
@@ -43,14 +43,15 @@ def run_all():
         case_dir = ROOT / folder
         log_path = case_dir / "execution.log"
         case_dir.joinpath("terminal").mkdir(parents=True, exist_ok=True)
-        command = [sys.executable, "test_case.py"]
-        print(f"\nPS {case_dir}> {' '.join(command)}")
-        completed = subprocess.run(command, cwd=case_dir, text=True, capture_output=True)
-        output = completed.stdout + completed.stderr
-        log_path.write_text(output, encoding="utf-8")
-        passed = completed.returncode == 0 and "RESULT: PASSED" in output
+        print(f"\nExecuting TC-{number:02d} in {case_dir}")
+        try:
+            passed = execute_with_terminal(case_dir)
+        except Exception as error:
+            passed = False
+            with log_path.open("a", encoding="utf-8") as log:
+                log.write(f"\nController error: {error}\nFINAL RESULT: FAIL\n")
+            print(f"Controller error: {error}")
         results.append((number, folder, passed))
-        print(output, end="")
         print(f"TC-{number:02d} {folder}: {'PASS' if passed else 'FAIL'}")
 
     passed_count = sum(result[2] for result in results)

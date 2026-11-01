@@ -58,7 +58,6 @@ def capture_case(folder):
         "Write-Host ('PS ' + (Get-Location).Path + '> python test_case.py'); "
         "python test_case.py; "
         "Write-Host ''; "
-        "Write-Host 'Terminal evidence captured by the controller'; "
         "Start-Sleep -Seconds 5"
     )
     process = subprocess.Popen(

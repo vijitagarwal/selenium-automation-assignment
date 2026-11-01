@@ -21,4 +21,10 @@ TEST_ACCOUNTS = {
     "TC03": "Vijit+TC03@chanakya.com",
     "TC04": "Vijit+TC04@chanakya.com",
     "TC05": "Vijit+TC05@chanakya.com",
+    "TC06": "Vijit+TC06@chanakya.com",
+    "TC10": "Vijit+TC10@chanakya.com",
+    "TC11": "Vijit+TC11@chanakya.com",
+    "TC14": "Vijit+TC14@chanakya.com",
+    "TC15": "Vijit+TC15@chanakya.com",
+    "TC21": "Vijit+TC21@chanakya.com",
 }

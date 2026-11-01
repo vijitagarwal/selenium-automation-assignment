@@ -1,6 +1,7 @@
 from pathlib import Path
 import sys
 
+from PIL import Image
 from run_all import TESTS
 
 
@@ -21,6 +22,12 @@ def validate():
             failures.append(f"{folder}: missing test_case.py")
         if not list((case_dir / "screenshots").glob("*.png")):
             failures.append(f"{folder}: missing browser screenshot")
+        for image_path in list((case_dir / "screenshots").glob("*.png")) + [required[1]]:
+            try:
+                with Image.open(image_path) as image:
+                    image.verify()
+            except Exception:
+                failures.append(f"{folder}: invalid image {image_path.name}")
         for path in required[1:]:
             if not path.is_file() or path.stat().st_size == 0:
                 failures.append(f"{folder}: missing {path.name}")
@@ -30,7 +37,7 @@ def validate():
                 contents = log.read_text(encoding="utf-8-sig")
             except UnicodeDecodeError:
                 contents = log.read_text(encoding="utf-16")
-            if "RESULT: " not in contents:
+            if "RESULT: " not in contents and "Traceback" not in contents and "FINAL RESULT: FAIL" not in contents:
                 failures.append(f"{folder}: execution status not recorded")
     if failures:
         print("\n".join(failures))
